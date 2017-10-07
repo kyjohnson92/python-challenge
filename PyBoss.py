@@ -13,10 +13,6 @@ empDOB = []
 ssn = []
 empSSN =[]
 state = []
-empFirstName =[]
-empLastName =[]
-DOB=[]
-SSN =[]
 
 us_state_abbrev = {
     'Alabama': 'AL',
@@ -88,20 +84,19 @@ while x == "Y":
 
 		for row in islice(employeereader,1, None):
 			empID.append(row[0])
-			
 			empName.append(row[1])
 			empDOB.append(row[2])
 			ssn.append(row[3])
 			state.append(us_state_abbrev[row[4]])
 
-		empFirstName.append([i.split(' ',)[0] for i in empName])
-		empLastName.append([i.split(' ',)[1] for i in empName])
+		empFirstName = [i.split(' ',)[0] for i in empName]
+		empLastName =[i.split(' ',)[1] for i in empName]
 		SSN = [i.split('-')[2] for i in ssn]
 		for i in SSN:
 			empSSN.append('***-**-'+ i)
-		DOB.append([datetime.datetime.strptime(str(i), '%Y-%m-%d').strftime('%m/%d/%Y') for i in empDOB])
+		DOB =[datetime.datetime.strptime(str(i), '%Y-%m-%d').strftime('%m/%d/%Y') for i in empDOB]
 
-	print(SSN)		
+			
 	newEmployeeData = zip(empID,empFirstName,empLastName,empSSN,DOB,state)
 	
 		
@@ -110,7 +105,7 @@ while x == "Y":
 	with open(newcsvpath, 'w', newline ='') as newemployeecsv:
 		wr = csv.writer(newemployeecsv, delimiter=',')
 		wr.writerow(['ID','First Name', 'Last Name', 'SSN', 'DOB', 'State'])
-		wr.writerows(empID)
+		wr.writerows(newEmployeeData)
 
 
 
